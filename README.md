@@ -8,7 +8,7 @@ If you wish to override the Monster Menu HP display, it is recommended to set th
 ## Features
 - Highlights venomed NPCs in the menu via a configurable colour and optional suffix.
 - Option to integrate with Monster Menu HP plugin to show venom status alongside HP
-- 
+
 ## Changelog
 
 ### 1.0.0
