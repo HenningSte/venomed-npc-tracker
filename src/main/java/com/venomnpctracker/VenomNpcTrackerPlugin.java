@@ -194,7 +194,7 @@ public class VenomNpcTrackerPlugin extends Plugin
 
 				}
 
-				if (config.showVenomIcon())
+				if (config.showVenomSuffix())
 				{
 					// venom icon unicode
 					String venomIcon = ColorUtil.wrapWithColorTag("V", config.hpColor());

@@ -20,12 +20,12 @@ public interface VenomNpcTrackerConfig extends Config
 	}
 
 	@ConfigItem(
-		keyName = "showVenomIcon",
-		name = "Show Venom Icon",
-		description = "Configures whether to show a venom icon next to venomed NPCs",
+		keyName = "showVenomSuffix",
+		name = "Show Venom Suffix",
+		description = "Configures whether to show a venom suffix next to venomed NPCs",
 		position = 2
 	)
-	default boolean showVenomIcon()
+	default boolean showVenomSuffix()
 	{
 		return true;
 	}
