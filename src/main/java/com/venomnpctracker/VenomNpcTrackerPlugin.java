@@ -130,8 +130,12 @@ public void onHitsplatApplied(HitsplatApplied hitsplatApplied)
 						hpColorTag + "$1</col>"
 					);
 				}
+				else if (config.displayMode().name().equals("SUFFIXONLY"))
+				{
+					finalTarget = target;
+				}
 				// Otherwise, completely override the target with our own formatting
-				else if (!config.displayMode().name().equals("ICONONLY"))
+				else
 				{
 					String cleanTarget = Text.removeTags(event.getTarget());
 					Color[] tagColors = getColorsFromTags(target);
@@ -175,10 +179,22 @@ public void onHitsplatApplied(HitsplatApplied hitsplatApplied)
 								levelText = ColorUtil.wrapWithColorTag(levelText, tagColors.length > 1 ? tagColors[1] : Color.WHITE);
 							}
 							break;
-						default:
+						case BOTH:
 							nameText = ColorUtil.wrapWithColorTag(nameText, config.hpColor());
 							levelText = ColorUtil.wrapWithColorTag(levelText, config.hpColor());
 							break;
+						default:
+							// Shouldn't happen, but just in case, fallback to original colors
+							if (arrowIndex != -1)
+							{
+								nameText = ColorUtil.wrapWithColorTag(nameText, tagColors.length > 2 ? tagColors[2] : Color.WHITE);
+								levelText = ColorUtil.wrapWithColorTag(levelText, tagColors.length > 3 ? tagColors[3] : Color.WHITE);
+							}
+							else
+							{
+								nameText = ColorUtil.wrapWithColorTag(nameText, tagColors.length > 0 ? tagColors[0] : Color.WHITE);
+								levelText = ColorUtil.wrapWithColorTag(levelText, tagColors.length > 1 ? tagColors[1] : Color.WHITE);
+							}
 					}
 					// Construct final string
 					finalTarget = preArrowText + arrowText + nameText + levelText;

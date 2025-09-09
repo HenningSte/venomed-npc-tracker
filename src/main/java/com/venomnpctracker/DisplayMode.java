@@ -8,7 +8,7 @@ public enum DisplayMode
 	LEVEL("Level", 0),
 	NAME("Name", 1),
 	BOTH("Both", 2),
-	ICONONLY("Icon Only", 3);
+	SUFFIXONLY("Suffix-Only", 3);
 
 	private final String name;
 	private final int id;

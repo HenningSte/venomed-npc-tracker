@@ -6,7 +6,7 @@ between venomed and unvenomed NPCs.
 
 There is an option to integrate this with the Monster Menu HP plugin to show venom status and 
 remaining HP at the same time.
-If you wish to instead override the Monster Menu HP display colours, it is recommended to set the display mode to "both".
+If you wish to instead override the Monster Menu HP display colours, it is recommended to set the display mode to both of suffixonly.
 
 ![venom_integrated.png](img/venom_integrated.png)
 
