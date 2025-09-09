@@ -30,7 +30,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 @Slf4j
 @PluginDescriptor(
-	name = "Venom NPC Tracker",
+	name = "Venomed NPC Tracker",
 	description = "Tracks NPCs that have been venomed"
 )
 public class VenomNpcTrackerPlugin extends Plugin
