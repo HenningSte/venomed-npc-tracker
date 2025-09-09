@@ -16,7 +16,7 @@ public interface VenomNpcTrackerConfig extends Config
 	)
 	default Color hpColor()
 	{
-		return Color.GREEN;
+		return new Color(0, 99, 67);
 	}
 
 	@ConfigItem(
@@ -32,8 +32,8 @@ public interface VenomNpcTrackerConfig extends Config
 
 	@ConfigItem(
 		keyName = "showVenomSuffix",
-		name = "Show Venom Suffix",
-		description = "Configures whether to show a venom suffix next to venomed NPCs",
+		name = "Show Suffix",
+		description = "Configures whether to show a -V suffix in the menu of venomed NPCs",
 		position = 3
 	)
 	default boolean showVenomSuffix()
