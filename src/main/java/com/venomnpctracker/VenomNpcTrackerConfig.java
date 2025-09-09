@@ -20,10 +20,21 @@ public interface VenomNpcTrackerConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "trackPoisonedNpcs",
+		name = "Track Poisoned NPCs",
+		description = "Configures whether to track poisoned NPCs as well as venomed NPCs",
+		position = 2
+	)
+	default boolean trackPoisonedNpcs()
+	{
+		return false;
+	}
+
+	@ConfigItem(
 		keyName = "showVenomSuffix",
 		name = "Show Venom Suffix",
 		description = "Configures whether to show a venom suffix next to venomed NPCs",
-		position = 2
+		position = 3
 	)
 	default boolean showVenomSuffix()
 	{
@@ -34,18 +45,18 @@ public interface VenomNpcTrackerConfig extends Config
 		keyName = "displayMode",
 		name = "Display Mode",
 		description = "Configures how to display venomed NPCs in the menu",
-		position = 3
+		position = 4
 	)
 	default DisplayMode displayMode()
 	{
-		return DisplayMode.LEVEL;
+		return DisplayMode.BOTH;
 	}
 
 	@ConfigItem(
 		keyName = "compatibilityMode",
 		name = "Compatibility Behaviour",
 		description = "Configures how to behave when Monster Menu HP is also installed",
-		position = 4
+		position = 5
 	)
 	default CompatibilityMode compatibilityMode()
 	{

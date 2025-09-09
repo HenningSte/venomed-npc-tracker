@@ -4,13 +4,17 @@ import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
 import java.awt.Color;
 import java.util.Set;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
+import org.apache.commons.lang3.ArrayUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.MenuAction;
 import static net.runelite.api.MenuAction.MENU_ACTION_DEPRIORITIZE_OFFSET;
+import static net.runelite.api.HitsplatID.VENOM;
+import static net.runelite.api.HitsplatID.POISON;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.NPC;
 import net.runelite.api.WorldView;
@@ -21,12 +25,9 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
-import static net.runelite.api.HitsplatID.VENOM;
-import java.util.ArrayList;
 import net.runelite.client.plugins.PluginManager;
 import net.runelite.client.util.ColorUtil;
 import net.runelite.client.util.Text;
-import org.apache.commons.lang3.ArrayUtils;
 
 @Slf4j
 @PluginDescriptor(
@@ -56,33 +57,26 @@ public class VenomNpcTrackerPlugin extends Plugin
 	private ConfigManager configManager;
 
 	@Override
-	protected void startUp() throws Exception
-	{
-		log.info("Example started!");
-	}
-
-	@Override
 	protected void shutDown() throws Exception
 	{
-		// clear list on shutdown
 		venomedNpcs.clear();
-		log.info("Example stopped!");
 	}
 
-	@Subscribe
-	public void onHitsplatApplied(HitsplatApplied hitsplatApplied)
+@Subscribe
+public void onHitsplatApplied(HitsplatApplied hitsplatApplied)
+{
+	if ((hitsplatApplied.getHitsplat().getHitsplatType() == VENOM) ||
+		(config.trackPoisonedNpcs() && hitsplatApplied.getHitsplat().getHitsplatType() == POISON))
 	{
-			if (hitsplatApplied.getHitsplat().getHitsplatType() == VENOM )
+		if (hitsplatApplied.getActor() instanceof NPC)
+		{
+			if (!venomedNpcs.contains((NPC) hitsplatApplied.getActor()))
 			{
-				if (hitsplatApplied.getActor() instanceof NPC)
-				{
-					if (!venomedNpcs.contains((NPC) hitsplatApplied.getActor()))
-					{
-					    venomedNpcs.add((NPC) hitsplatApplied.getActor());
-					}
-				}
+				venomedNpcs.add((NPC) hitsplatApplied.getActor());
 			}
+		}
 	}
+}
 
 	@Subscribe
 	public void onNpcDespawned(NpcDespawned event)
@@ -125,7 +119,6 @@ public class VenomNpcTrackerPlugin extends Plugin
 				// If compatibility mode is set to "INTEGRATE"
 				if (menuHpPlugin != null && pluginManager.isPluginEnabled(menuHpPlugin) && config.compatibilityMode().name().equals("INTEGRATE"))
 				{
-					log.info("Integrating with Menu HP");
 					Color menuHpHpColor = (Color) configManager.getConfiguration("menuhp", "hpColor", Color.class);
 
 					String menuHpHpColorTag = ColorUtil.colorTag(menuHpHpColor);
@@ -158,8 +151,6 @@ public class VenomNpcTrackerPlugin extends Plugin
 					}
 					String nameText = levelStartIndex != -1 ? cleanTarget.substring(nameStartIndex, levelStartIndex) : cleanTarget;
 					String levelText = levelStartIndex != -1 ? cleanTarget.substring(levelStartIndex) : "";
-
-					log.info("Colors in tag: {}", (Object) tagColors);
 
 					switch (config.displayMode()) {
 						case LEVEL:
