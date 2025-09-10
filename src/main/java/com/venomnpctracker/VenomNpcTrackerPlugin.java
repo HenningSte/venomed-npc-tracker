@@ -62,21 +62,21 @@ public class VenomNpcTrackerPlugin extends Plugin
 		venomedNpcs.clear();
 	}
 
-@Subscribe
-public void onHitsplatApplied(HitsplatApplied hitsplatApplied)
-{
-	if ((hitsplatApplied.getHitsplat().getHitsplatType() == VENOM) ||
-		(config.trackPoisonedNpcs() && hitsplatApplied.getHitsplat().getHitsplatType() == POISON))
+	@Subscribe
+	public void onHitsplatApplied(HitsplatApplied hitsplatApplied)
 	{
-		if (hitsplatApplied.getActor() instanceof NPC)
+		if ((hitsplatApplied.getHitsplat().getHitsplatType() == VENOM) ||
+			(config.trackPoisonedNpcs() && hitsplatApplied.getHitsplat().getHitsplatType() == POISON))
 		{
-			if (!venomedNpcs.contains((NPC) hitsplatApplied.getActor()))
+			if (hitsplatApplied.getActor() instanceof NPC)
 			{
-				venomedNpcs.add((NPC) hitsplatApplied.getActor());
+				if (!venomedNpcs.contains((NPC) hitsplatApplied.getActor()))
+				{
+					venomedNpcs.add((NPC) hitsplatApplied.getActor());
+				}
 			}
 		}
 	}
-}
 
 	@Subscribe
 	public void onNpcDespawned(NpcDespawned event)
@@ -156,7 +156,8 @@ public void onHitsplatApplied(HitsplatApplied hitsplatApplied)
 					String nameText = levelStartIndex != -1 ? cleanTarget.substring(nameStartIndex, levelStartIndex) : cleanTarget;
 					String levelText = levelStartIndex != -1 ? cleanTarget.substring(levelStartIndex) : "";
 
-					switch (config.displayMode()) {
+					switch (config.displayMode())
+					{
 						case LEVEL:
 							levelText = ColorUtil.wrapWithColorTag(levelText, config.hpColor());
 							if (arrowIndex != -1)
@@ -203,7 +204,6 @@ public void onHitsplatApplied(HitsplatApplied hitsplatApplied)
 
 				if (config.showVenomSuffix())
 				{
-					// venom icon unicode
 					String venomIcon = ColorUtil.wrapWithColorTag("V", config.hpColor());
 					finalTarget = finalTarget + " - " + venomIcon;
 				}
